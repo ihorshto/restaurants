@@ -1,0 +1,14 @@
+ldlc.api/web
+ldlc.sgbd/db
+ldlcsgb
+
+.env
+.DS_Store
+
+*server.crt
+*private.key
+
+.idea
+
+.prettierrc
+
