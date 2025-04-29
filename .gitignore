@@ -1,0 +1,12 @@
+restaurants.sgbd/db
+
+.env
+.DS_Store
+
+*server.crt
+*private.key
+
+.idea
+
+.prettierrc
+

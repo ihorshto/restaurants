@@ -1,0 +1,81 @@
+services:
+  # Laravel API - Depends on database
+  restaurants.api:
+    build:
+      context: ./restaurants.api/
+      dockerfile: Dockerfile
+      args:
+        uid: ${UID}
+    container_name: restaurants.api
+    environment:
+      - APACHE_RUN_USER=#${UID}
+      - APACHE_RUN_GROUP=#${UID}
+    volumes:
+      - ./restaurants.api/web:/var/www/html
+      - ./restaurants.api/000-default.conf:/etc/apache2/sites-available/000-default.conf
+      - ./restaurants.api/ports.conf:/etc/apache2/ports.conf
+    ports:
+      - ${PORT_HTTP}:${PORT_HTTP}
+    depends_on:
+      restaurants.sgbd:
+        condition: service_healthy
+    restart: always
+    entrypoint: sh -c " /var/www/html/onLaunch.sh && apache2-foreground"
+    networks:
+      - internet
+      - dbNet
+      - ldapNet
+      - elk
+
+
+
+  # Database
+  restaurants.sgbd:
+    build:
+      context: ./restaurants.sgbd/
+      dockerfile: Dockerfile
+    container_name: restaurants.sgbd
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_HOST: '%'  # needs to be enclosed with quotes
+    restart: always
+    volumes:
+      - './restaurants.sgbd/db:/var/lib/mysql'
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+    networks:
+      - dbNet
+    healthcheck:
+      test: [ "CMD-SHELL", "mysqladmin ping -P ${DB_PORT} -p${DB_ROOT_PASSWORD} | grep 'mysqld is alive' || exit 1" ]
+      interval: 5s
+      timeout: 30s
+      retries: 10
+
+
+
+  # Adminer - No dependance
+  restaurants.dbviewer:
+    build:
+      context: ./restaurants.dbviewer/
+      dockerfile: Dockerfile
+    container_name: restaurants.dbviewer
+    restart: unless-stopped
+    depends_on:
+      restaurants.sgbd:
+        condition: service_healthy
+    ports:
+      - ${ADMINER_PORT}:${ADMINER_PORT}
+    networks:
+      - internet
+      - dbNet
+
+
+
+networks:
+  internet:
+    driver: bridge
+  dbNet:
+    driver: bridge

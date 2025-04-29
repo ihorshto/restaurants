@@ -1,0 +1,37 @@
+services:
+  # Database
+  restaurants.sgbd:
+    build:
+      context: ./restaurants.sgbd/
+      dockerfile: Dockerfile
+    container_name: restaurants.sgbd
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - './restaurants.sgbd/db:/var/lib/mysql'
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+    healthcheck:
+      test: [ "CMD-SHELL", "mysqladmin ping -P ${DB_PORT} -p${DB_ROOT_PASSWORD} | grep 'mysqld is alive' || exit 1" ]
+      interval: 5s
+      timeout: 30s
+      retries: 10
+
+
+
+  # Adminer - No dependance
+  restaurants.dbviewer:
+    build:
+      context: ./restaurants.dbviewer/
+      dockerfile: Dockerfile
+    container_name: restaurants.dbviewer
+    restart: unless-stopped
+    depends_on:
+      restaurants.sgbd:
+        condition: service_healthy
+    ports:
+      - ${ADMINER_PORT}:${ADMINER_PORT}
