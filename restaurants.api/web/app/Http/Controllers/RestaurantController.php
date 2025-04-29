@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Restaurant;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class RestaurantController extends Controller
@@ -20,7 +21,9 @@ class RestaurantController extends Controller
      */
     public function create()
     {
-        //
+        $tags = Tag::all();
+
+        return view('restaurants.create', compact('tags'));
     }
 
     /**
