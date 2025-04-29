@@ -1,6 +1,4 @@
-ldlc.api/web
-ldlc.sgbd/db
-ldlcsgb
+restaurants.sgbd/db
 
 .env
 .DS_Store
