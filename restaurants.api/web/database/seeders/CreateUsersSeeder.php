@@ -30,7 +30,7 @@ class CreateUsersSeeder extends Seeder
             ['email' => 'ihor@restaurant.com'],
             [
                 'name' => 'Ihor Restaurant Admin',
-                'email'=> 'ihor@restaurant.com',
+                'email' => 'ihor@restaurant.com',
                 'password' => Hash::make('password'),
             ]
         );
