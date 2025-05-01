@@ -1,4 +1,5 @@
 import './bootstrap';
+import './vendor/preline.min.js';
 
 import Alpine from 'alpinejs';
 import 'preline';
