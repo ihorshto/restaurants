@@ -5,10 +5,10 @@
      </div>
      <div class="p-4 md:p-6">
          <h3 class="text-xl font-semibold text-gray-800">
-             {{$name}}
+             {!! $name !!}
          </h3>
          <p class="mt-3 text-gray-500">
-             {{$description}}
+             {!! $description !!}
          </p>
          <div>
              @foreach($tags as $tag)
