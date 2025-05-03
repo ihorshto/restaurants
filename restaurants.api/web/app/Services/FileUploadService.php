@@ -40,18 +40,6 @@ class FileUploadService
             $cleanedName
         );
 
-        $mimeType = $file->getMimeType();
-
-        if (str_starts_with($mimeType, 'image/')) {
-            if ($mimeType == 'image/svg+xml' || $mimeType == 'text/svg+xml') {
-                // Optionally minify the SVG file
-                $this->minifySvg($filePath);
-            } else {
-                // Compress the image with Imagick if it's a raster image
-                $this->compressImageWithImagick($filePath);
-            }
-        }
-
         if (!$filePath) {
             throw new \Exception('Erreur lors de l\'enregistrement du fichier');
         }
