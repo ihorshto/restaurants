@@ -51,12 +51,12 @@
             <div class="grid md:grid-cols-2 gap-4 sm:mt-6 mt-4">
                 <div>
                     <x-input-label for="longitude" :value="__('messages.longitude')" />
-                    <x-text-input id="longitude" class="block mt-1 w-full" type="text" name="longitude" :value="old('longitude')" placeholder="{{__('messages.restaurants.restaurant_longitude')}}" required />
+                    <x-text-input id="longitude" class="block mt-1 w-full" type="number" step="any" name="longitude" min="-180" max="180" :value="old('longitude')" placeholder="{{__('messages.restaurants.restaurant_longitude')}}" required />
                     <x-input-error :messages="$errors->get('longitude')" class="mt-2" />
                 </div>
                 <div class="">
                     <x-input-label for="latitude" :value="__('messages.latitude')" />
-                    <x-text-input id="latitude" class="block mt-1 w-full" type="text" name="latitude" :value="old('latitude')" placeholder="{{__('messages.restaurants.restaurant_longitude')}}" required />
+                    <x-text-input id="latitude" class="block mt-1 w-full" type="number" step="any" name="latitude" min="-90" max="90" :value="old('latitude')" placeholder="{{__('messages.restaurants.restaurant_longitude')}}" required />
                     <x-input-error :messages="$errors->get('latitude')" class="mt-2" />
                 </div>
             </div>
