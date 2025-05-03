@@ -58,12 +58,11 @@ class RestaurantController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Restaurant $restaurant)
     {
-        //
+        $restaurant->load('tags');
+
+        return view('restaurants.show', compact('restaurant'));
     }
 
     /**
@@ -71,16 +70,16 @@ class RestaurantController extends Controller
      */
     public function edit(Restaurant $restaurant)
     {
-        //
+        $tags = Tag::all();
+        $restaurant->load('tags');
+
+        return view('restaurants.edit', compact('restaurant', 'tags'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Restaurant $restaurant)
-    {
-        //
-    }
+    public function update(Request $request, Restaurant $restaurant) {}
 
     /**
      * Remove the specified resource from storage.

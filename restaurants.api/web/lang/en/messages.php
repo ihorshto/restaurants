@@ -2,6 +2,7 @@
 
 return [
     'create' => 'Create',
+    'update' => 'Update',
     'restaurants' => [
         'create_restaurant' => 'Create Restaurant',
         'edit_restaurant' => 'Edit Restaurant',

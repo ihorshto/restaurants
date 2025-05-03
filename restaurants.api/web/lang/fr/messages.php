@@ -2,6 +2,7 @@
 
 return [
     'create' => 'Créer',
+    'update' => 'Mettre à jour',
     'restaurants' => [
         'create_restaurant' => 'Créer un restaurant',
         'edit_restaurant' => 'Modifier le restaurant',
