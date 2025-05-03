@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\UploadFileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,6 +20,10 @@ Route::middleware('auth')->group(function () {
 
     Route::group(['middleware' => ['role:super_admin']], function () {
         Route::resource('restaurants', RestaurantController::class);
+    });
+
+    Route::group(['middleware' => ['role:super_admin,restaurant_admin']], function () {
+        Route::post('/upload', UploadFileController::class)->name('file.upload');
     });
 });
 
