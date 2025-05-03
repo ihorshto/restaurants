@@ -24,4 +24,6 @@ return [
     'menu' => 'Menu',
     'longitude' => 'Longitude',
     'latitude' => 'Latitude',
+    'open_menu' => 'Ouvrir le menu',
+    'open_in_map' => 'Ouvrir dans la carte',
 ];
