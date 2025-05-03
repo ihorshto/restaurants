@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 class FileUploadService
 {
     protected string $disk;
+
     protected int $maxFileSize;
 
     public function __construct(string $disk = 'public', int $maxFileSize = 20480)
@@ -22,9 +23,9 @@ class FileUploadService
         $request->validate([
             $fileName => "required|mimes:{$allowedMimes}|max:{$this->maxFileSize}",
         ], [
-            $fileName . '.mimes' => 'Le fichier doit être de type : ' . str_replace(',', ', ', $allowedMimes) . '.',
-            $fileName . '.required' => 'Veuillez télécharger un fichier.',
-            $fileName . '.max' => 'La taille du fichier ne doit pas dépasser ' . ($this->maxFileSize / 1024) . ' Mo.',
+            $fileName.'.mimes' => 'Le fichier doit être de type : '.str_replace(',', ', ', $allowedMimes).'.',
+            $fileName.'.required' => 'Veuillez télécharger un fichier.',
+            $fileName.'.max' => 'La taille du fichier ne doit pas dépasser '.($this->maxFileSize / 1024).' Mo.',
         ]);
     }
 
@@ -32,7 +33,7 @@ class FileUploadService
     {
         $file = $request->file($requestFileName);
         $originalName = $file->getClientOriginalName();
-        $cleanedName = time() . '_' . $this->sanitizeFileName($originalName);
+        $cleanedName = time().'_'.$this->sanitizeFileName($originalName);
 
         $filePath = Storage::disk($this->disk)->putFileAs(
             $folderName,
@@ -40,7 +41,7 @@ class FileUploadService
             $cleanedName
         );
 
-        if (!$filePath) {
+        if (! $filePath) {
             throw new \Exception('Erreur lors de l\'enregistrement du fichier');
         }
 
@@ -57,7 +58,7 @@ class FileUploadService
         $userId = auth()->check() ? auth()->user()->id : '0';
         $tempFilePath = "uploads/uploads_{$userId}/{$temporaryFileName}";
 
-        if (!Storage::disk($this->disk)->exists($tempFilePath)) {
+        if (! Storage::disk($this->disk)->exists($tempFilePath)) {
             throw new Exception('Le fichier téléchargé n\'a pas été trouvé ou a été supprimé.');
         }
 
@@ -67,7 +68,7 @@ class FileUploadService
             $temporaryFileName
         );
 
-        if (!$documentFilePath) {
+        if (! $documentFilePath) {
             throw new Exception('Erreur lors de l\'enregistrement du fichier');
         }
         // Remove temporary file
@@ -80,6 +81,7 @@ class FileUploadService
     {
         $cleanedName = preg_replace('/[^a-zA-Z0-9-_\.]/u', '_', trim($fileName));
         $cleanedName = preg_replace('/_+/', '_', $cleanedName);
+
         return trim($cleanedName, '_');
     }
 }

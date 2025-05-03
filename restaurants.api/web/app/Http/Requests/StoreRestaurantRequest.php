@@ -20,8 +20,8 @@ class StoreRestaurantRequest extends FormRequest
             'menu_file_name' => 'required|string',
             'latitude' => ['required', 'numeric', 'between:-90,90'],
             'longitude' => ['required', 'numeric', 'between:-180,180'],
-//            'tags' => 'array',
-//            'tags.*' => 'exists:tags,id',
+            //            'tags' => 'array',
+            //            'tags.*' => 'exists:tags,id',
         ];
     }
 

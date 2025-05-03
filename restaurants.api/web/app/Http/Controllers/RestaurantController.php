@@ -32,7 +32,7 @@ class RestaurantController extends Controller
 
     public function store(StoreRestaurantRequest $request)
     {
-        try{
+        try {
             $validated = $request->validated();
 
             // Save the file from temp to public and get its path
@@ -50,7 +50,8 @@ class RestaurantController extends Controller
 
             return redirect()->route('restaurants.index')->with('success', __('responses.restaurant.created.success'));
         } catch (\Exception $e) {
-            Log::error('Error creating restaurant: ' . $e->getMessage());
+            Log::error('Error creating restaurant: '.$e->getMessage());
+
             return redirect()->back()->with('error', __('responses.restaurant.created.error'));
         }
     }

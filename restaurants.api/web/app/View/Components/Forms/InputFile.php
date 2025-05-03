@@ -9,13 +9,21 @@ use Illuminate\View\Component;
 class InputFile extends Component
 {
     public $id;
+
     public $url;
+
     public $maxFiles;
+
     public $maxFilesize;
+
     public $singleton;
+
     public $acceptedFiles;
+
     public $fileName;
+
     public $fileId;
+
     public function __construct($id, $url, $maxFiles, $maxFilesize, $singleton, $acceptedFiles, $fileName, $fileId)
     {
         $this->id = $id;
