@@ -64,73 +64,27 @@
     window.addEventListener('load', () => {
         HSFileUpload.autoInit();
         const fileName = document.getElementById("{{ $fileId }}");
-        const sizeErrorEl = document.getElementById("size-error-{{$id}}");
-        const typeErrorEl = document.getElementById("type-error-{{$id}}");
-        const urlErrorEl = document.getElementById("url-error-{{$id}}");
-
-        // Function to hide all error messages
-        const hideAllErrors = () => {
-            sizeErrorEl.classList.add('hidden');
-            typeErrorEl.classList.add('hidden');
-            urlErrorEl.classList.add('hidden');
-        };
-
-        // Get HSFileUpload instance
         const {element} = HSFileUpload.getInstance('#{{$id}}', true);
         const {dropzone} = element;
 
-        // Clear errors when a new file is added
-        dropzone.on('addedfile', (file) => {
-            hideAllErrors();
-        });
-
-        // Handle file errors
-        dropzone.on('error', (file, errorMessage, xhr) => {
-            // Parse the acceptable file types
+        dropzone.on('error', (file, response) => {
             const acceptedFiles = @json($acceptedFiles ?? '').split(',');
-
-            // Check for file size error
             if (file.size > element.concatOptions.maxFilesize * 1024 * 1024) {
-                sizeErrorEl.classList.remove('hidden');
-                dropzone.removeFile(file);
+                const successEls = document.querySelectorAll('[data-hs-file-upload-file-success]');
+                const errorEls = document.querySelectorAll('[data-hs-file-upload-file-error]');
+                successEls.forEach((el) => el.style.display = 'none');
+                errorEls.forEach((el) => el.style.display = '');
+                HSStaticMethods.autoInit(['tooltip']);
+            } else if(acceptedFiles && acceptedFiles.includes(file.type) === false) {
+                const errorEls = document.querySelectorAll('[data-hs-file-upload-file-type-error]');
+                errorEls.forEach((el) => el.style.display = '');
+                HSStaticMethods.autoInit(['tooltip']);
             }
-
-            // Check for file type error
-            if (acceptedFiles && acceptedFiles.length > 0 && !acceptedFiles.some(type => file.type.includes(type.trim()))) {
-                typeErrorEl.classList.remove('hidden');
-                dropzone.removeFile(file);
-            }
-
-            // Check for URL/server error
-            if (xhr && (xhr.status === 0 || xhr.status >= 400)) {
-                urlErrorEl.classList.remove('hidden');
-                dropzone.removeFile(file);
-            }
-
-            // Remove success indicators if present
-            const successEls = document.querySelectorAll('[data-hs-file-upload-file-success]');
-            successEls.forEach((el) => el.style.display = 'none');
         });
 
-        // Check URL validity before upload
-        dropzone.on('sending', (file, xhr, formData) => {
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 0 || xhr.status >= 400) {
-                        urlErrorEl.classList.remove('hidden');
-                    }
-                }
-            };
-        });
-
-        // Handle successful upload
+        // Listen for the successful file upload event
         dropzone.on('success', (file, response) => {
-            hideAllErrors();
-
-            // Set the file name values
-            if (response && response.name) {
-                fileName.value = response.name;
-            }
+            fileName.value = response.name;
         });
     });
 </script>
