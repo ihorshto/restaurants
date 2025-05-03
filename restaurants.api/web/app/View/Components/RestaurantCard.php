@@ -8,6 +8,8 @@ use Illuminate\View\Component;
 
 class RestaurantCard extends Component
 {
+    public $id;
+
     public $name;
 
     public $description;
@@ -22,8 +24,9 @@ class RestaurantCard extends Component
 
     public $tags;
 
-    public function __construct($name, $description, $imagePath, $menuPath, $latitude, $longitude, $tags)
+    public function __construct($id, $name, $description, $imagePath, $menuPath, $latitude, $longitude, $tags)
     {
+        $this->id = $id;
         $this->name = $name;
         $this->description = $description;
         $this->imagePath = $imagePath;

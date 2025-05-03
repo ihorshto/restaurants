@@ -1,8 +1,14 @@
  <!-- Card -->
  <div class="group flex flex-col h-full bg-white border border-gray-200 shadow-2xs rounded-xl">
-     <div class="h-52 flex flex-col justify-center items-center bg-amber-500 rounded-t-xl">
-         <img class="h-52 w-full mx-auto rounded-t-xl" src="{{asset('storage/'.$imagePath)}}" alt="">
-     </div>
+     <a href="{{ route('restaurants.show', $id) }}">
+         <div class="h-52 bg-amber-500 rounded-t-xl overflow-hidden group">
+             <img
+                 src="{{ asset('storage/' . $imagePath) }}"
+                 alt=""
+                 class="h-52 w-full object-cover transform transition-transform duration-300 group-hover:scale-110"
+             >
+         </div>
+     </a>
      <div class="p-4 md:p-6">
          <h3 class="text-xl font-semibold text-gray-800">
              {!! $name !!}
