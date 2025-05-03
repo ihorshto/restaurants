@@ -20,7 +20,9 @@ class RestaurantController extends Controller
 
     public function index()
     {
-        return view('restaurants.index');
+        $restaurants = Restaurant::with('tags')->get();
+
+        return view('restaurants.index', compact('restaurants'));
     }
 
     public function create()
