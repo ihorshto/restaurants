@@ -21,7 +21,6 @@ return [
     'alpha' => 'The :attribute field must only contain letters.',
     'alpha_dash' => 'The :attribute field must only contain letters, numbers, dashes, and underscores.',
     'alpha_num' => 'The :attribute field must only contain letters and numbers.',
-    'any_of' => 'The :attribute field is invalid.',
     'array' => 'The :attribute field must be an array.',
     'ascii' => 'The :attribute field must only contain single-byte alphanumeric characters and symbols.',
     'before' => 'The :attribute field must be a date before :date.',
@@ -175,11 +174,10 @@ return [
     |
     */
 
-    'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
-        ],
-    ],
+    'email.unique' => 'The email address has already been taken.',
+    'email.lowercase' => 'The email address must be lowercase.',
+    'telephone.invalid' => 'The telephone number :telephone is invalid.',
+    'tags.exists' => 'The selected tag is invalid.',
 
     /*
     |--------------------------------------------------------------------------
