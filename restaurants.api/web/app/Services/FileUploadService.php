@@ -32,7 +32,7 @@ class FileUploadService
     {
         $file = $request->file($requestFileName);
         $originalName = $file->getClientOriginalName();
-        $cleanedName = $this->sanitizeFileName($originalName);
+        $cleanedName = time() . '_' . $this->sanitizeFileName($originalName);
 
         $filePath = Storage::disk($this->disk)->putFileAs(
             $folderName,
