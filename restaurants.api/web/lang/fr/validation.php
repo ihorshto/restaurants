@@ -327,5 +327,8 @@ return [
         'is_document_partial' => 'document partiel',
         'is_signature_required' => 'signature requise',
         'document_file_name' => 'document',
+        // New
+        'image_file_name' => 'image',
+        'menu_file_name' => 'menu',
     ],
 ];

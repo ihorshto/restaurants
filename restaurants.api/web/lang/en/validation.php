@@ -190,6 +190,9 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'image_file_name' => 'image',
+        'menu_file_name' => 'menu',
+    ],
 
 ];

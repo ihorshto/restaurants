@@ -10,7 +10,7 @@
         <div>
             <div>
                 <x-input-label for="name" :value="__('messages.name')" />
-                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name', $restaurant->name ?? '')" placeholder="{{__('messages.restaurants.restaurant_name')}}" required />
+                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name', $restaurant->name ?? '')" placeholder="{{__('messages.restaurants.restaurant_name')}}" />
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
             <div class="sm:mt-6 mt-4">
@@ -72,7 +72,7 @@
                 toggleCountText="{{__('messages.selected')}}">
                 @foreach($keyWords as $keyWord)
                     <option value="{{ $keyWord->id }}"
-                            @if(in_array($keyWord->id, old('key_words', isset($keyWord) ? $restaurant->tags->pluck('id')->toArray() : []))) selected @endif>
+                            @if(in_array($keyWord->id, old('key_words', isset($restaurant) ? $restaurant->tags->pluck('id')->toArray() : []))) selected @endif>
                         {{ $keyWord->name }}
                     </option>
                 @endforeach

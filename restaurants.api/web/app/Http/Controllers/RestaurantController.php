@@ -27,9 +27,9 @@ class RestaurantController extends Controller
 
     public function create()
     {
-        $tags = Tag::all();
+        $keyWords = Tag::all();
 
-        return view('restaurants.create', compact('tags'));
+        return view('restaurants.create', compact('keyWords'));
     }
 
     public function store(StoreRestaurantRequest $request)
@@ -41,7 +41,7 @@ class RestaurantController extends Controller
             $menuPath = $this->fileUploadService->saveFile($validated['menu_file_name'], 'restaurants_menus');
             $imagePath = $this->fileUploadService->saveFile($validated['image_file_name'], 'restaurants_images');
 
-            Restaurant::create([
+            $restaurant = Restaurant::create([
                 'name' => $validated['name'],
                 'description' => $validated['description'],
                 'image_path' => $imagePath,
@@ -49,6 +49,11 @@ class RestaurantController extends Controller
                 'latitude' => $validated['latitude'],
                 'longitude' => $validated['longitude'],
             ]);
+
+            // Attach tags to the restaurant
+            if (isset($validated['key_words'])) {
+                $restaurant->tags()->attach($validated['key_words']);
+            }
 
             return redirect()->route('restaurants.index')->with('success', __('responses.restaurant.created.success'));
         } catch (\Exception $e) {
@@ -70,20 +75,44 @@ class RestaurantController extends Controller
      */
     public function edit(Restaurant $restaurant)
     {
-        $tags = Tag::all();
+        $keyWords = Tag::all();
         $restaurant->load('tags');
 
-        return view('restaurants.edit', compact('restaurant', 'tags'));
+        return view('restaurants.edit', compact('restaurant', 'keyWords'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Restaurant $restaurant) {}
+    public function update(StoreRestaurantRequest $request, Restaurant $restaurant) {
+       try{
+           $validated = $request->validated();
 
-    /**
-     * Remove the specified resource from storage.
-     */
+           $menuPath = $validated['menu_file_name'] ? $this->fileUploadService->saveFile($validated['menu_file_name'], 'restaurants_menus') : $restaurant->menu_path;
+           $imagePath = $validated['image_file_name'] ? $this->fileUploadService->saveFile($validated['image_file_name'], 'restaurants_images') : $restaurant->image_path;
+
+           $restaurant->update([
+               'name' => $validated['name'],
+               'description' => $validated['description'],
+               'image_path' => $imagePath,
+               'menu_path' => $menuPath,
+               'latitude' => $validated['latitude'],
+               'longitude' => $validated['longitude'],
+           ]);
+
+           // Attach tags to the restaurant
+           if (isset($validated['key_words'])) {
+               $restaurant->tags()->sync($validated['key_words']);
+           } else {
+               $restaurant->tags()->detach();
+           }
+
+           return redirect()->route('restaurants.index')->with('success', __('responses.restaurant.updated.success'));
+       } catch (\Exception $e) {
+           Log::error('Error updating restaurant: '.$e->getMessage());
+
+           return redirect()->back()->with('error', __('responses.restaurant.updated.error'));
+       }
+    }
+
+
     public function destroy(Restaurant $restaurant)
     {
         //
