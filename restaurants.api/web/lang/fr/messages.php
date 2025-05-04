@@ -30,6 +30,8 @@ return [
     'key_words' => 'Mots clés',
     'select_multiple_key_words' => 'Sélectionner plusieurs mots clés',
     'selected' => 'Sélectionnés',
+    'cancel' => 'Annuler',
+    'confirm' => 'Confirmer',
     'confirmation' => 'Confirmation',
     'confirm_delete_key_word' => 'Êtes-vous sûr de vouloir supprimer ce mot clé ?',
 ];

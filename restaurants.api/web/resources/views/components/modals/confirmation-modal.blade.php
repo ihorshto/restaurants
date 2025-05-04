@@ -33,11 +33,11 @@
                 <button type="button"
                         class="button-default border border-blue-500 mr-4"
                         data-hs-overlay="#{{$id}}">
-                    Annuler
+                    {{__('messages.cancel')}}
                 </button>
                 <button type="{{$confirmButtonType}}" id="confirmButton"
                         class="button-default bg-blue-500 text-white">
-                    Confirmer
+                    {{__('messages.confirm')}}
                 </button>
             </div>
         </div>

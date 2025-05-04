@@ -28,6 +28,8 @@ return [
     'key_words' => 'Key Words',
     'select_multiple_key_words' => 'Select multiple key words',
     'selected' => 'Selected',
+    'cancel' => 'Cancel',
+    'confirm' => 'Confirm',
     'confirmation' => 'Confirmation',
     'confirm_delete_key_word' => 'Are you sure you want to delete this key word?',
 ];
