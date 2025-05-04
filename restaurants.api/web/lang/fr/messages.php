@@ -27,4 +27,9 @@ return [
     'latitude' => 'Latitude',
     'open_menu' => 'Ouvrir le menu',
     'open_in_map' => 'Ouvrir dans la carte',
+    'key_words' => 'Mots clés',
+    'select_multiple_key_words' => 'Sélectionner plusieurs mots clés',
+    'selected' => 'Sélectionnés',
+    'confirmation' => 'Confirmation',
+    'confirm_delete_key_word' => 'Êtes-vous sûr de vouloir supprimer ce mot clé ?',
 ];

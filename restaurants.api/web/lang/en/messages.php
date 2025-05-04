@@ -25,4 +25,9 @@ return [
     'latitude' => 'Latitude',
     'open_menu' => 'Open Menu',
     'open_in_map' => 'Open in Map',
+    'key_words' => 'Key Words',
+    'select_multiple_key_words' => 'Select multiple key words',
+    'selected' => 'Selected',
+    'confirmation' => 'Confirmation',
+    'confirm_delete_key_word' => 'Are you sure you want to delete this key word?',
 ];
