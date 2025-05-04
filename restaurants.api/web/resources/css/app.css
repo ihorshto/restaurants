@@ -70,12 +70,13 @@
 }
 
 .hs-select {
-    border: 1px solid gray;
+    border: 0px solid oklch(92.8% 0.006 264.531);
     border-radius: 8px;
+    margin: 0;
 }
 
 .button-default {
-    @apply max-h-[45px] h-full py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent disabled:opacity-50 disabled:pointer-events-none cursor-pointer focus:outline-hidden focus:ring-2 focus:ring-blue-500;
+    @apply max-h-[45px] h-full py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border disabled:opacity-50 disabled:pointer-events-none cursor-pointer focus:outline-hidden focus:ring-2 focus:ring-blue-500;
 }
 
 .button-danger {
