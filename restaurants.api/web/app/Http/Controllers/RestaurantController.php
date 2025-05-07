@@ -6,7 +6,6 @@ use App\Http\Requests\StoreRestaurantRequest;
 use App\Models\Restaurant;
 use App\Models\Tag;
 use App\Services\FileUploadService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class RestaurantController extends Controller
@@ -81,37 +80,37 @@ class RestaurantController extends Controller
         return view('restaurants.edit', compact('restaurant', 'keyWords'));
     }
 
-    public function update(StoreRestaurantRequest $request, Restaurant $restaurant) {
-       try{
-           $validated = $request->validated();
+    public function update(StoreRestaurantRequest $request, Restaurant $restaurant)
+    {
+        try {
+            $validated = $request->validated();
 
-           $menuPath = $validated['menu_file_name'] ? $this->fileUploadService->saveFile($validated['menu_file_name'], 'restaurants_menus') : $restaurant->menu_path;
-           $imagePath = $validated['image_file_name'] ? $this->fileUploadService->saveFile($validated['image_file_name'], 'restaurants_images') : $restaurant->image_path;
+            $menuPath = $validated['menu_file_name'] ? $this->fileUploadService->saveFile($validated['menu_file_name'], 'restaurants_menus') : $restaurant->menu_path;
+            $imagePath = $validated['image_file_name'] ? $this->fileUploadService->saveFile($validated['image_file_name'], 'restaurants_images') : $restaurant->image_path;
 
-           $restaurant->update([
-               'name' => $validated['name'],
-               'description' => $validated['description'],
-               'image_path' => $imagePath,
-               'menu_path' => $menuPath,
-               'latitude' => $validated['latitude'],
-               'longitude' => $validated['longitude'],
-           ]);
+            $restaurant->update([
+                'name' => $validated['name'],
+                'description' => $validated['description'],
+                'image_path' => $imagePath,
+                'menu_path' => $menuPath,
+                'latitude' => $validated['latitude'],
+                'longitude' => $validated['longitude'],
+            ]);
 
-           // Attach tags to the restaurant
-           if (isset($validated['key_words'])) {
-               $restaurant->tags()->sync($validated['key_words']);
-           } else {
-               $restaurant->tags()->detach();
-           }
+            // Attach tags to the restaurant
+            if (isset($validated['key_words'])) {
+                $restaurant->tags()->sync($validated['key_words']);
+            } else {
+                $restaurant->tags()->detach();
+            }
 
-           return redirect()->route('restaurants.index')->with('success', __('responses.restaurant.updated.success'));
-       } catch (\Exception $e) {
-           Log::error('Error updating restaurant: '.$e->getMessage());
+            return redirect()->route('restaurants.index')->with('success', __('responses.restaurant.updated.success'));
+        } catch (\Exception $e) {
+            Log::error('Error updating restaurant: '.$e->getMessage());
 
-           return redirect()->back()->with('error', __('responses.restaurant.updated.error'));
-       }
+            return redirect()->back()->with('error', __('responses.restaurant.updated.error'));
+        }
     }
-
 
     public function destroy(Restaurant $restaurant)
     {
