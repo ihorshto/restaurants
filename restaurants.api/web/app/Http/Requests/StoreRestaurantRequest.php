@@ -14,6 +14,7 @@ class StoreRestaurantRequest extends FormRequest
     public function rules(): array
     {
         $isUpdate = $this->routeIs('restaurants.update');
+
         return [
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:1000',

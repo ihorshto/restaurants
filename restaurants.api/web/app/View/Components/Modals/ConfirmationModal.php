@@ -9,9 +9,13 @@ use Illuminate\View\Component;
 class ConfirmationModal extends Component
 {
     public $id;
+
     public $title;
+
     public $subtitle;
+
     public $confirmButtonType;
+
     public function __construct($id, $title, $subtitle, $confirmButtonType)
     {
         $this->id = $id;

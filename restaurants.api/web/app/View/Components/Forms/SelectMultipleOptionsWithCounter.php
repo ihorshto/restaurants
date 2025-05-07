@@ -9,8 +9,11 @@ use Illuminate\View\Component;
 class SelectMultipleOptionsWithCounter extends Component
 {
     public $name;
+
     public $placeholder;
+
     public $hasSearch;
+
     public $toggleCountText;
 
     public function __construct($name, $placeholder, $hasSearch, $toggleCountText)
