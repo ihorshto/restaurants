@@ -26,10 +26,11 @@
      </div>
      <div class="mt-auto flex border-t border-gray-200 divide-x divide-gray-200">
          <a href="{{asset('storage/'.$menuPath)}}" target="_blank" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-es-xl bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
+             <img src="{{asset('icons/book-open-text.svg')}}" alt="" class="w-5 h-5">
              {{__('messages.open_menu')}}
          </a>
          <button onclick="openMap({{$latitude}}, {{$longitude}})" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-ee-xl bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
-             {{__('messages.open_in_map')}}
+             <img src="{{asset('icons/map.svg')}}" alt="" class="w-5 h-5"> {{__('messages.open_in_map')}}
          </button>
      </div>
  </div>
