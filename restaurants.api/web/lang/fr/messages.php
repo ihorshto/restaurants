@@ -3,7 +3,7 @@
 return [
     'create' => 'Créer',
     'update' => 'Mettre à jour',
-    'restaurants_' => 'Restaurants',
+    'main_page_title' => 'Restaurants',
     'restaurants' => [
         'create_restaurant' => 'Créer un restaurant',
         'edit_restaurant' => 'Modifier le restaurant',

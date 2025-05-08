@@ -3,7 +3,7 @@
 return [
     'create' => 'Create',
     'update' => 'Update',
-    'restaurants_' => 'Restaurants',
+    'main_page_title' => 'Restaurants',
     'restaurants' => [
         'create_restaurant' => 'Create Restaurant',
         'edit_restaurant' => 'Edit Restaurant',
