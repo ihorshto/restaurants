@@ -6,7 +6,9 @@ use App\Http\Requests\StoreRestaurantRequest;
 use App\Models\Restaurant;
 use App\Models\Tag;
 use App\Services\FileUploadService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
 
 class RestaurantController extends Controller
 {
@@ -17,14 +19,24 @@ class RestaurantController extends Controller
         $this->fileUploadService = $fileUploadService;
     }
 
-    public function index()
+    public function index(Request $request): View
     {
-        $restaurants = Restaurant::with('tags')->get();
+        $search = $request->input('search') ?? null;
 
-        return view('restaurants.index', compact('restaurants'));
+        if ($search) {
+            $restaurants = Restaurant::where('name', 'like', '%'.$search.'%')
+                ->orWhere('description', 'like', '%'.$search.'%')
+                ->orWhereHas('tags', function ($query) use ($search) {
+                   $query->where('name', 'like', '%'.$search.'%');
+                })->get();
+        } else {
+            $restaurants = Restaurant::with('tags')->get();
+        }
+
+        return view('restaurants.index', compact('restaurants', 'search'));
     }
 
-    public function create()
+    public function create(): View
     {
         $keyWords = Tag::all();
 

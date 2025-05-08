@@ -3,6 +3,7 @@
 return [
     'create' => 'Créer',
     'update' => 'Mettre à jour',
+    'restaurants_' => 'Restaurants',
     'restaurants' => [
         'create_restaurant' => 'Créer un restaurant',
         'edit_restaurant' => 'Modifier le restaurant',
@@ -20,6 +21,9 @@ return [
         'exeeds_max_size' => 'Le fichier dépasse la taille maximale autorisée de :max_size MB',
         'invalid_type' => 'Type de fichier invalide. Seuls les fichiers :types sont autorisés',
         'upload_failed' => 'Échec du téléchargement du fichier',
+    ],
+    'search' => [
+        'placeholder' => 'Rechercher par nom, description et tags',
     ],
     'image' => 'Image',
     'menu' => 'Menu',
