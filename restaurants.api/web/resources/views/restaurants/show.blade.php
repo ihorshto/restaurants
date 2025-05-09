@@ -10,7 +10,7 @@
         </a>
     </div>
 
-    <div class="grid md:grid-cols-2 gap-8">
+    <div class="grid md:grid-cols-2 gap-6">
         <!-- Left column - Image and action buttons -->
         <div class="flex flex-col">
             <div class="rounded-t-xl overflow-hidden shadow-md h-80">
