@@ -15,6 +15,11 @@
     </form>
     <!-- End SearchBox -->
 
+    @if($restaurants->isEmpty())
+        <div class="text-center">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">{{ __('messages.restaurants.empty.title') }}</h2>
+        </div>
+    @endif
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         @foreach($restaurants as $restaurant)
             <x-restaurant-card

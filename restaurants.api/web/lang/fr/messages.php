@@ -12,6 +12,9 @@ return [
         'restaurant_description' => 'Description du restaurant',
         'restaurant_longitude' => 'Longitude du restaurant',
         'restaurant_latitude' => 'Latitude du restaurant',
+        'empty' => [
+            'title' => 'Aucun restaurant trouvé',
+        ]
     ],
     'name' => 'Nom',
     'description' => 'Description',

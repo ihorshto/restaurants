@@ -10,6 +10,11 @@ return [
         'delete_restaurant' => 'Delete Restaurant',
         'restaurant_name' => 'Restaurant Name',
         'restaurant_description' => 'Restaurant Description',
+        'restaurant_longitude' => 'Restaurant longitude',
+        'restaurant_latitude' => 'Restaurant latitude',
+        'empty' => [
+            'title' => 'No restaurant found',
+        ],
     ],
     'name' => 'Name',
     'description' => 'Description',
