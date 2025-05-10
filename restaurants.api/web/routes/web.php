@@ -5,8 +5,12 @@ use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\UploadFileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [RestaurantController::class, 'index'])->name('restaurants.index');
-Route::get('/restaurants/show', [RestaurantController::class, 'show'])->name('restaurants.show');
+Route::get('/', function () {
+    return redirect('/restaurants');
+});
+
+Route::get('/restaurants', [RestaurantController::class, 'index'])->name('restaurants.index');
+Route::get('/restaurants/{restaurant}', [RestaurantController::class, 'show'])->name('restaurants.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
