@@ -14,7 +14,7 @@ return [
         'restaurant_latitude' => 'Latitude du restaurant',
         'empty' => [
             'title' => 'Aucun restaurant trouvé',
-        ]
+        ],
     ],
     'name' => 'Nom',
     'description' => 'Description',

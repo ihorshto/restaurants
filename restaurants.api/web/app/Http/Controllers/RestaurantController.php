@@ -27,7 +27,7 @@ class RestaurantController extends Controller
             $restaurants = Restaurant::where('name', 'like', '%'.$search.'%')
                 ->orWhere('description', 'like', '%'.$search.'%')
                 ->orWhereHas('tags', function ($query) use ($search) {
-                   $query->where('name', 'like', '%'.$search.'%');
+                    $query->where('name', 'like', '%'.$search.'%');
                 })->get();
         } else {
             $restaurants = Restaurant::with('tags')->get();

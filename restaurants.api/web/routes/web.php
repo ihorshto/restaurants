@@ -22,7 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::group(['middleware' => ['role:super_admin']], function () {
-//        Route::resource('restaurants', RestaurantController::class);
+        //        Route::resource('restaurants', RestaurantController::class);
     });
 
     Route::group(['middleware' => ['role:super_admin,restaurant_admin']], function () {
