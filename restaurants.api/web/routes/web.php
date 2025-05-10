@@ -5,9 +5,8 @@ use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\UploadFileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [RestaurantController::class, 'index'])->name('restaurants.index');
+Route::get('/restaurants/show', [RestaurantController::class, 'show'])->name('restaurants.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -19,7 +18,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::group(['middleware' => ['role:super_admin']], function () {
-        Route::resource('restaurants', RestaurantController::class);
+//        Route::resource('restaurants', RestaurantController::class);
     });
 
     Route::group(['middleware' => ['role:super_admin,restaurant_admin']], function () {
