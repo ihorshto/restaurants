@@ -15,24 +15,26 @@
     </form>
     <!-- End SearchBox -->
 
+    <!-- Restaurants List -->
     @if($restaurants->isEmpty())
         <div class="text-center">
             <h2 class="text-2xl font-bold text-gray-900 mb-4">{{ __('messages.restaurants.empty.title') }}</h2>
         </div>
+    @else
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach($restaurants as $restaurant)
+                <x-restaurant-card
+                    :id="$restaurant->id"
+                    name="{{$restaurant->name}}"
+                    description="{{$restaurant->description}}"
+                    imagePath="{{$restaurant->image_path}}"
+                    menuPath="{{$restaurant->menu_path}}"
+                    longitude="{{$restaurant->longitude}}"
+                    latitude="{{$restaurant->latitude}}"
+                    :tags="$restaurant->tags"/>
+            @endforeach
+        </div>
     @endif
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        @foreach($restaurants as $restaurant)
-            <x-restaurant-card
-                :id="$restaurant->id"
-                name="{{$restaurant->name}}"
-                description="{{$restaurant->description}}"
-                imagePath="{{$restaurant->image_path}}"
-                menuPath="{{$restaurant->menu_path}}"
-                longitude="{{$restaurant->longitude}}"
-                latitude="{{$restaurant->latitude}}"
-                :tags="$restaurant->tags"/>
-        @endforeach
-    </div>
 
     @include('scripts/openMap')
 </x-guest-layout>
