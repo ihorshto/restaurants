@@ -14,7 +14,7 @@
              {!! $name !!}
          </h3>
              <p class="my-2 text-gray-500">
-                 {!! $description !!}
+                 {!! \Illuminate\Support\Str::words($description, 30, '...') !!}
              </p>
              <div class="flex flex-wrap gap-x-1">
                  @foreach ($tags as $index => $tag)
