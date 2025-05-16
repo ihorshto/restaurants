@@ -35,3 +35,37 @@ services:
         condition: service_healthy
     ports:
       - ${ADMINER_PORT}:${ADMINER_PORT}
+
+
+  # Elasticsearch
+  restaurants.elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.16.2
+    container_name: restaurants.elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - xpack.security.http.ssl.enabled=false
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+
+
+
+  # Kibana
+  restaurants.kibana:
+    image: docker.elastic.co/kibana/kibana:8.16.2
+    container_name: restaurants.kibana
+    ports:
+      - 5601:5601
+    depends_on:
+      - restaurants.elasticsearch
+    environment:
+      - ELASTICSEARCH_HOSTS=http://restaurants.elasticsearch:9200/
+    volumes:
+      - kibana_data:/usr/share/kibana/data
+
+volumes:
+  esdata:
+  kibana_data:
+
