@@ -21,19 +21,14 @@ class RestaurantController extends Controller
 
     public function index(Request $request): View
     {
-        $search = $request->input('search') ?? null;
+        $search = $request->input('search');
 
-        if ($search) {
-            $restaurants = Restaurant::where('name', 'like', '%'.$search.'%')
-                ->orWhere('description', 'like', '%'.$search.'%')
-                ->orWhereHas('tags', function ($query) use ($search) {
-                    $query->where('name', 'like', '%'.$search.'%');
-                })->get();
-        } else {
-            $restaurants = Restaurant::with('tags')->get();
-        }
+        $restaurants = Restaurant::search($search)->get();
 
-        return view('restaurants.index', compact('restaurants', 'search'));
+        return view('restaurants.index', [
+            'restaurants' => $restaurants,
+            'search' => $search,
+        ]);
     }
 
     public function create(): View
@@ -109,12 +104,15 @@ class RestaurantController extends Controller
                 'longitude' => $validated['longitude'],
             ]);
 
-            // Attach tags to the restaurant
+            // Sync tags
             if (isset($validated['key_words'])) {
                 $restaurant->tags()->sync($validated['key_words']);
             } else {
                 $restaurant->tags()->detach();
             }
+
+            $restaurant->load('tags'); // make sure relationship is loaded
+            $restaurant->searchable();
 
             return redirect()->route('restaurants.index')->with('success', __('responses.restaurant.updated.success'));
         } catch (\Exception $e) {
