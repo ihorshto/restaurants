@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use JeroenG\Explorer\Application\Explored;
 use Laravel\Scout\Searchable;
@@ -33,14 +34,15 @@ class Restaurant extends Model implements Explored
         return $this->belongsToMany(Tag::class, 'restaurant_tags', 'restaurant_id', 'tag_id');
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function toSearchableArray()
+    public function toSearchableArray(): array
     {
         $this->loadMissing('tags');
+
         return [
             'id' => $this->id,
             'name' => $this->name,
