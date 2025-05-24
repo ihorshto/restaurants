@@ -24,14 +24,14 @@ class RestaurantResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Basic Information')
+                Forms\Components\Section::make(__('messages.basic_info'))
                     ->schema([
-                        Forms\Components\TextInput::make('name')
+                        Forms\Components\TextInput::make(__('messages.name'))
                             ->required()
                             ->maxLength(255)
                             ->columnSpanFull(),
 
-                        Forms\Components\Textarea::make('description')
+                        Forms\Components\Textarea::make(__('messages.description'))
                             ->required()
                             ->maxLength(1000)
                             ->rows(4)
@@ -41,7 +41,7 @@ class RestaurantResource extends Resource
                 Forms\Components\Section::make('Media')
                     ->schema([
                         Forms\Components\FileUpload::make('image_path')
-                            ->label('Restaurant Image')
+                            ->label(__('messages.restaurants.restaurant_image'))
                             ->image()
                             ->required()
                             ->directory('restaurants/images')
@@ -52,7 +52,7 @@ class RestaurantResource extends Resource
                             ->columnSpanFull(),
 
                         Forms\Components\FileUpload::make('menu_path')
-                            ->label('Menu PDF')
+                            ->label(__('messages.restaurants.restaurant_menu'))
                             ->acceptedFileTypes(['application/pdf'])
                             ->required()
                             ->directory('restaurants/menus')
@@ -62,40 +62,40 @@ class RestaurantResource extends Resource
                             ->columnSpanFull(),
                     ]),
 
-                Forms\Components\Section::make('Location')
+                Forms\Components\Section::make(__('messages.location'))
                     ->schema([
                         Forms\Components\Grid::make(2)
                             ->schema([
-                                Forms\Components\TextInput::make('latitude')
+                                Forms\Components\TextInput::make(__('messages.latitude'))
                                     ->numeric()
                                     ->required()
                                     ->step('any')
                                     ->rules(['between:-90,90'])
-                                    ->helperText('Enter latitude between -90 and 90'),
+                                    ->helperText(__('messages.latitude_helper')),
 
-                                Forms\Components\TextInput::make('longitude')
+                                Forms\Components\TextInput::make(__('messages.longitude'))
                                     ->numeric()
                                     ->required()
                                     ->step('any')
                                     ->rules(['between:-180,180'])
-                                    ->helperText('Enter longitude between -180 and 180'),
+                                    ->helperText(__('messages.longitude_helper')),
                             ]),
                     ]),
 
-                Forms\Components\Section::make('Tags')
+                Forms\Components\Section::make(__('messages.key_words'))
                     ->schema([
-                        Forms\Components\Select::make('tags')
+                        Forms\Components\Select::make(__('messages.key_words'))
                             ->relationship('tags', 'name')
                             ->multiple()
                             ->preload()
                             ->searchable()
                             ->columnSpanFull()
-                            ->helperText('Select tags for filtering'),
+                            ->helperText(__('messages.key_words_helper')),
                     ]),
 
                 // Приховане поле для super_admin
                 Forms\Components\Select::make('user_id')
-                    ->label('Restaurant Owner')
+                    ->label(__('messages.restaurants.owner'))
                     ->relationship('user', 'name')
                     ->searchable()
                     ->preload()
@@ -109,37 +109,41 @@ class RestaurantResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('image_path')
-                    ->label('Image')
+                    ->label(__('messages.image'))
                     ->circular()
                     ->size(60),
 
                 Tables\Columns\TextColumn::make('name')
+                    ->label(__('messages.name'))
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('description')
+                    ->label(__('messages.description'))
                     ->limit(50)
                     ->tooltip(function (Model $record): string {
                         return $record->description;
                     }),
 
                 Tables\Columns\TextColumn::make('user.name')
-                    ->label('Owner')
+                    ->label(__('messages.restaurants.owner'))
                     ->visible(fn () => auth()->user()->hasRole('super_admin'))
                     ->sortable(),
 
                 Tables\Columns\BadgeColumn::make('tags.name')
-                    ->label('Tags')
+                    ->label(__('messages.key_words'))
                     ->separator(',')
                     ->color('primary'),
 
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label(__('messages.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('tags')
+                Tables\Filters\SelectFilter::make(__('messages.key_words'))
+                    ->label(__('messages.key_words'))
                     ->relationship('tags', 'name')
                     ->multiple()
                     ->preload(),
