@@ -20,6 +20,7 @@ class Restaurant extends Model implements Explored
         'latitude',
         'longitude',
         'telephone',
+        'user_id',
     ];
 
     protected $casts = [
@@ -30,6 +31,11 @@ class Restaurant extends Model implements Explored
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class, 'restaurant_tags', 'restaurant_id', 'tag_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function toSearchableArray()
