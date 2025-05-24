@@ -17,7 +17,7 @@ return [
         'auth' => [
             'username' => env('SCOUT_ELASTICSEARCH_USERNAME', 'username'),
             'password' => env('SCOUT_ELASTICSEARCH_PASSWORD', 'password'),
-        ]
+        ],
     ],
 
     /**
@@ -26,8 +26,8 @@ return [
      * them in the index configuration below.
      */
     'default_index_settings' => [
-        //'index' => [],
-        //'analysis' => [],
+        // 'index' => [],
+        // 'analysis' => [],
     ],
 
     /**
@@ -35,7 +35,7 @@ return [
      * of the mapping possibilities can be found in the documentation of Explorer's repository.
      */
     'indexes' => [
-        Restaurant::class
+        Restaurant::class,
     ],
 
     /**
