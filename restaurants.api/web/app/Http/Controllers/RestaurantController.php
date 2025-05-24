@@ -19,4 +19,11 @@ class RestaurantController extends Controller
             'search' => $search,
         ]);
     }
+
+    public function show(Restaurant $restaurant)
+    {
+        $restaurant->load('tags');
+
+        return view('restaurants.show', compact('restaurant'));
+    }
 }
