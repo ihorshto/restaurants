@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\RestaurantResource\Pages;
 use App\Models\Restaurant;
+use App\Models\Tag;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -26,12 +27,12 @@ class RestaurantResource extends Resource
             ->schema([
                 Forms\Components\Section::make(__('messages.basic_info'))
                     ->schema([
-                        Forms\Components\TextInput::make(__('messages.name'))
+                        Forms\Components\TextInput::make('name')
                             ->required()
                             ->maxLength(255)
                             ->columnSpanFull(),
 
-                        Forms\Components\Textarea::make(__('messages.description'))
+                        Forms\Components\Textarea::make('description')
                             ->required()
                             ->maxLength(1000)
                             ->rows(4)
@@ -66,14 +67,14 @@ class RestaurantResource extends Resource
                     ->schema([
                         Forms\Components\Grid::make(2)
                             ->schema([
-                                Forms\Components\TextInput::make(__('messages.latitude'))
+                                Forms\Components\TextInput::make('latitude')
                                     ->numeric()
                                     ->required()
                                     ->step('any')
                                     ->rules(['between:-90,90'])
                                     ->helperText(__('messages.latitude_helper')),
 
-                                Forms\Components\TextInput::make(__('messages.longitude'))
+                                Forms\Components\TextInput::make('longitude')
                                     ->numeric()
                                     ->required()
                                     ->step('any')
@@ -84,13 +85,50 @@ class RestaurantResource extends Resource
 
                 Forms\Components\Section::make(__('messages.key_words'))
                     ->schema([
-                        Forms\Components\Select::make(__('messages.key_words'))
-                            ->relationship('tags', 'name')
+                        Forms\Components\Select::make('tags')
+                            ->label(__('messages.key_words'))
+                            ->relationship('tags', 'name', function (Builder $query) {
+                                // Show only active tags
+                                return $query->where('is_active', true);
+                            })
                             ->multiple()
                             ->preload()
                             ->searchable()
+                            ->optionsLimit(50)
                             ->columnSpanFull()
-                            ->helperText(__('messages.key_words_helper')),
+                            ->helperText(__('messages.key_words_helper'))
+                            // Only super_admin can create new tags
+                            ->createOptionForm([
+                                Forms\Components\TextInput::make('name')
+                                    ->label(__('messages.tag_name'))
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->unique(Tag::class, 'name'),
+
+                                Forms\Components\Textarea::make('description')
+                                    ->label(__('messages.description'))
+                                    ->rows(2)
+                                    ->maxLength(500),
+
+                                Forms\Components\ColorPicker::make('color')
+                                    ->label(__('messages.color'))
+                                    ->hex()
+                                    ->default('#3B82F6'),
+                            ])
+                            ->createOptionUsing(function (array $data): int {
+                                if (!auth()->user()?->hasRole('super_admin')) {
+                                    throw new \Exception(__('messages.insufficient_permissions_create_tags'));
+                                }
+
+                                $data['is_active'] = true;
+                                $tag = Tag::create($data);
+                                return $tag->getKey();
+                            })
+                            // Show the create option only for super_admin
+                            ->createOptionAction(function (Forms\Components\Actions\Action $action) {
+                                return $action
+                                    ->visible(fn () => auth()->user()?->hasRole('super_admin') ?? false);
+                            }),
                     ]),
 
                 // Приховане поле для super_admin
@@ -130,10 +168,21 @@ class RestaurantResource extends Resource
                     ->visible(fn () => auth()->user()->hasRole('super_admin'))
                     ->sortable(),
 
-                Tables\Columns\BadgeColumn::make('tags.name')
+                // Оновлена колонка для тегів з кольорами
+                Tables\Columns\TextColumn::make('tags.name')
                     ->label(__('messages.key_words'))
-                    ->separator(',')
-                    ->color('primary'),
+                    ->badge()
+                    ->color(function ($record, $state) {
+                        // Знаходимо тег за назвою та повертаємо його колір
+                        $tag = $record->tags->where('name', $state)->first();
+                        return $tag && $tag->color ? $tag->color : 'primary';
+                    })
+                    ->separator(' ')
+                    ->limit(3)
+                    ->tooltip(function ($record): ?string {
+                        $tags = $record->tags->pluck('name')->toArray();
+                        return count($tags) > 3 ? implode(', ', $tags) : null;
+                    }),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('messages.created_at'))
@@ -142,10 +191,20 @@ class RestaurantResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make(__('messages.key_words'))
+                Tables\Filters\SelectFilter::make('tags')
                     ->label(__('messages.key_words'))
-                    ->relationship('tags', 'name')
+                    ->relationship('tags', 'name', function (Builder $query) {
+                        // Фільтруємо тільки активні теги
+                        return $query->where('is_active', true);
+                    })
                     ->multiple()
+                    ->preload(),
+
+                // Додатковий фільтр для власника (тільки для super_admin)
+                Tables\Filters\SelectFilter::make('user')
+                    ->label(__('messages.restaurants.owner'))
+                    ->relationship('user', 'name')
+                    ->visible(fn () => auth()->user()->hasRole('super_admin'))
                     ->preload(),
             ])
             ->actions([

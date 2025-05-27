@@ -33,4 +33,12 @@ return [
     'location' => 'Emplacement',
     'basic_info' => 'Informations de base',
     'created_at' => 'Créé le',
+    'color' => 'Couleur',
+    'tag_name' => 'Nom du tag',
+    'active' => 'Actif',
+    'insufficient_permissions_create_tags' => 'Vous n\'avez pas les permissions suffisantes pour créer des tags. Veuillez contacter l\'administrateur.',
+    'status' => 'Statut',
+    'restaurants_count' => 'Nombre de restaurants',
+    'only_active' => 'Only active',
+    'only_inactive' => 'Only inactive',
 ];
