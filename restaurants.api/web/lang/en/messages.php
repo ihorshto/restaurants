@@ -1,17 +1,7 @@
 <?php
 
 return [
-    'create' => 'Create',
-    'update' => 'Update',
-    'main_page_title' => 'Restaurants',
     'restaurants' => [
-        'create_restaurant' => 'Create Restaurant',
-        'edit_restaurant' => 'Edit Restaurant',
-        'delete_restaurant' => 'Delete Restaurant',
-        'restaurant_name' => 'Restaurant Name',
-        'restaurant_description' => 'Restaurant Description',
-        'restaurant_longitude' => 'Restaurant longitude',
-        'restaurant_latitude' => 'Restaurant latitude',
         'restaurant_image' => 'Restaurant Image',
         'restaurant_menu' => 'Restaurant Menu',
         'owner' => 'Restaurant Owner',
@@ -19,20 +9,13 @@ return [
             'title' => 'No restaurant found',
         ],
     ],
-    'name' => 'Name',
-    'description' => 'Description',
-    'file' => [
-        'no_chosen' => 'No file chosen',
-        'choose' => 'Choose a file',
-        'exeeds_max_size' => 'The file exceeds the maximum allowed size of :max_size MB',
-        'invalid_type' => 'Invalid file type. Only :types files are allowed',
-        'upload_failed' => 'File upload failed',
-    ],
     'search' => [
+        'title' => 'Search',
         'placeholder' => 'Search by name, description and tags',
     ],
+    'name' => 'Name',
+    'description' => 'Description',
     'image' => 'Image',
-    'menu' => 'Menu',
     'longitude' => 'Longitude',
     'longitude_helper' => 'Enter longitude between -180 and 180',
     'latitude' => 'Latitude',
