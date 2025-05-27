@@ -17,7 +17,7 @@
                 placeholder="{!! __('messages.search.placeholder') !!}"
                 data-small-placeholder="{!! \Illuminate\Support\Str::words(__('messages.search.placeholder'), 4, '...') !!}"
             />
-            <button type="submit" class="text-white absolute px-4 py-2 end-2.5 bottom-2 bg-blue-500 hover:bg-blue-600 transition-all inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent focus:outline-none disabled:opacity-50 disabled:pointer-events-none cursor-pointer">Search</button>
+            <button type="submit" class="text-white absolute px-4 py-2 end-2.5 bottom-2 bg-blue-500 hover:bg-blue-600 transition-all inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent focus:outline-none disabled:opacity-50 disabled:pointer-events-none cursor-pointer">{{__('messages.search.title')}}</button>
         </div>
     </form>
     <!-- End SearchBox -->
