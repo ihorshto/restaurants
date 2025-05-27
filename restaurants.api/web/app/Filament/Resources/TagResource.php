@@ -100,10 +100,9 @@ class TagResource extends Resource
             ])
             ->modifyQueryUsing(function (Builder $query) {
                 $user = auth()->user();
-
-                // Якщо користувач не super_admin, обмежуємо доступ
+                // Only for super_admin
                 if (!$user->hasRole('super_admin')) {
-                    // Показуємо тільки теги, які використовуються в ресторанах цього власника
+                    // Show only tags related to the user's restaurants
                     $restaurantIds = $user->restaurants()->pluck('id');
                     $query->whereHas('restaurants', function (Builder $subQuery) use ($restaurantIds) {
                         $subQuery->whereIn('restaurants.id', $restaurantIds);
@@ -130,14 +129,14 @@ class TagResource extends Resource
         ];
     }
 
-    // Обмеження доступу до ресурсу
+    // Limit access to the resource
     public static function canAccess(): bool
     {
         $user = auth()->user();
         return $user && ($user->hasRole('super_admin') || $user->hasRole('restaurant_admin'));
     }
 
-    // Обмеження створення тегів тільки для super_admin
+    // Tags can only be created by super_admin
     public static function canCreate(): bool
     {
         return auth()->user()?->hasRole('super_admin') ?? false;
