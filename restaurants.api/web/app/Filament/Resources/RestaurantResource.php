@@ -116,12 +116,13 @@ class RestaurantResource extends Resource
                                     ->default('#3B82F6'),
                             ])
                             ->createOptionUsing(function (array $data): int {
-                                if (!auth()->user()?->hasRole('super_admin')) {
+                                if (! auth()->user()?->hasRole('super_admin')) {
                                     throw new \Exception(__('messages.insufficient_permissions_create_tags'));
                                 }
 
                                 $data['is_active'] = true;
                                 $tag = Tag::create($data);
+
                                 return $tag->getKey();
                             })
                             // Show the create option only for super_admin
@@ -175,12 +176,14 @@ class RestaurantResource extends Resource
                     ->color(function ($record, $state) {
                         // Знаходимо тег за назвою та повертаємо його колір
                         $tag = $record->tags->where('name', $state)->first();
+
                         return $tag && $tag->color ? $tag->color : 'primary';
                     })
                     ->separator(' ')
                     ->limit(3)
                     ->tooltip(function ($record): ?string {
                         $tags = $record->tags->pluck('name')->toArray();
+
                         return count($tags) > 3 ? implode(', ', $tags) : null;
                     }),
 

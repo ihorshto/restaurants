@@ -21,6 +21,7 @@ class TagPolicy
         // restaurant_admin може переглядати тільки теги своїх ресторанів
         if ($user->hasRole('restaurant_admin')) {
             $restaurantIds = $user->restaurants()->pluck('id');
+
             return $tag->restaurants()->whereIn('restaurants.id', $restaurantIds)->exists();
         }
 

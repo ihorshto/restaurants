@@ -60,6 +60,7 @@ class TagResource extends Resource
                     ->limit(50)
                     ->tooltip(function (Tables\Columns\TextColumn $column): ?string {
                         $state = $column->getState();
+
                         return strlen($state) > 50 ? $state : null;
                     }),
 
@@ -101,7 +102,7 @@ class TagResource extends Resource
             ->modifyQueryUsing(function (Builder $query) {
                 $user = auth()->user();
                 // Only for super_admin
-                if (!$user->hasRole('super_admin')) {
+                if (! $user->hasRole('super_admin')) {
                     // Show only tags related to the user's restaurants
                     $restaurantIds = $user->restaurants()->pluck('id');
                     $query->whereHas('restaurants', function (Builder $subQuery) use ($restaurantIds) {
@@ -133,6 +134,7 @@ class TagResource extends Resource
     public static function canAccess(): bool
     {
         $user = auth()->user();
+
         return $user && ($user->hasRole('super_admin') || $user->hasRole('restaurant_admin'));
     }
 
