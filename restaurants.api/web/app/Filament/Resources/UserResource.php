@@ -65,7 +65,7 @@ class UserResource extends Resource
 
                                 // super_admin може призначати всі ролі
                                 if ($user->hasRole('super_admin')) {
-                                    return Role::all()->pluck('name', 'name');
+                                    return Role::all()->pluck('name', 'id');
                                 }
 
                                 // restaurant_admin не може змінювати ролі
