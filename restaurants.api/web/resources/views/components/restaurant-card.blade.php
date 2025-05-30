@@ -18,7 +18,7 @@
              </p>
              <div class="flex flex-wrap gap-x-1">
                  @foreach ($tags as $index => $tag)
-                     <span class="inline-block bg-blue-100 text-gray-800 text-xs font-medium px-2 py-1 rounded-full">
+                     <span class="inline-block text-gray-800 text-xs font-medium px-2 py-1 rounded-full" style="background-color: {{$tag->color}};">
                         {{ $tag->name }}
                     </span>
                  @endforeach

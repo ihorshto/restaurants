@@ -29,7 +29,7 @@
                     <h3 class="text-xl font-semibold mb-4">{{__('messages.key_words')}}</h3>
                     <div class="flex flex-wrap gap-2">
                         @foreach ($restaurant->tags as $index => $tag)
-                            <span class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1.5 rounded-full">
+                            <span class="inline-block text-gray-800 text-xs font-medium px-3 py-1.5 rounded-full" style="background-color: {{$tag->color}};">
                                 {{ $tag->name }}
                             </span>
                         @endforeach
