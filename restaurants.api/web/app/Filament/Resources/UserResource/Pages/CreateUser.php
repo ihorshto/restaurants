@@ -18,7 +18,7 @@ class CreateUser extends CreateRecord
     {
         $user = $this->record;
 
-        // Якщо не призначено жодної ролі, призначаємо restaurant_admin за замовчуванням
+        // If the user is not a super admin or restaurant admin, assign them the restaurant_admin role
         if (! $user->hasAnyRole(['super_admin', 'restaurant_admin'])) {
             $user->assignRole('restaurant_admin');
         }
