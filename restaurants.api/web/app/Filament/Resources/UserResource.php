@@ -20,10 +20,6 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
-    protected static ?string $navigationGroup = 'Management';
-
-    protected static ?string $navigationLabel = 'Utilisateurs';
-
     protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
@@ -63,12 +59,10 @@ class UserResource extends Resource
                             ->options(function () {
                                 $user = auth()->user();
 
-                                // super_admin може призначати всі ролі
                                 if ($user->hasRole('super_admin')) {
                                     return Role::all()->pluck('name', 'id');
                                 }
 
-                                // restaurant_admin не може змінювати ролі
                                 return [];
                             })
                             ->visible(fn () => auth()->user()->hasRole('super_admin'))
@@ -84,7 +78,7 @@ class UserResource extends Resource
 
                                 $roles = $record->getRoleNames()->toArray();
 
-                                return empty($roles) ? __('no_roles'): implode(', ', $roles);
+                                return empty($roles) ? __('no_roles') : implode(', ', $roles);
                             })
                             ->visible(fn () => ! auth()->user()->hasRole('super_admin')),
                     ]),
@@ -203,10 +197,9 @@ class UserResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make()
                     ->visible(fn (Model $record) => auth()->user()->hasRole('super_admin') &&
-                        $record->id !== auth()->id() // Не дозволяємо видаляти себе
+                        $record->id !== auth()->id() // Do not allow deleting the current user
                     ),
 
-                // Дія для скидання пароля
                 Tables\Actions\Action::make('reset_password')
                     ->label(__('messages.reset_password'))
                     ->icon('heroicon-o-key')
@@ -255,7 +248,6 @@ class UserResource extends Resource
             return parent::getEloquentQuery();
         }
 
-        // restaurant_admin бачить тільки себе
         return parent::getEloquentQuery()->where('id', $user->id);
     }
 
@@ -275,7 +267,6 @@ class UserResource extends Resource
     {
         $user = auth()->user();
 
-        // Не можна видаляти себе та super_admin може видаляти інших
         return $user->hasRole('super_admin') && $record->id !== $user->id;
     }
 
@@ -286,7 +277,6 @@ class UserResource extends Resource
         return $user->hasRole('super_admin') || $record->id === $user->id;
     }
 
-    // Обмеження доступу до ресурсу
     public static function canAccess(): bool
     {
         return auth()->user()->hasAnyRole(['super_admin', 'restaurant_admin']);
@@ -304,11 +294,20 @@ class UserResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        // Показуємо кількість користувачів для super_admin
         if (auth()->user()->hasRole('super_admin')) {
             return static::getModel()::count();
         }
 
         return null;
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('filament.navigation.users');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament.navigation.groups.management');
     }
 }

@@ -17,8 +17,6 @@ class TagResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-tag';
 
-    protected static ?string $navigationGroup = 'Management';
-
     protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
@@ -142,5 +140,15 @@ class TagResource extends Resource
     public static function canCreate(): bool
     {
         return auth()->user()?->hasRole('super_admin') ?? false;
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('filament.navigation.tags');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament.navigation.groups.management');
     }
 }

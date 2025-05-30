@@ -19,8 +19,6 @@ class RestaurantResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-storefront';
 
-    protected static ?string $navigationLabel = 'Restaurants';
-
     public static function form(Form $form): Form
     {
         return $form
@@ -263,5 +261,10 @@ class RestaurantResource extends Resource
             'view' => Pages\ViewRestaurant::route('/{record}'),
             'edit' => Pages\EditRestaurant::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('filament.navigation.restaurants');
     }
 }
