@@ -29,7 +29,7 @@
     </div>
 </div>
 
-<!-- Footer inside the body -->
+<!-- Footer -->
 <footer class="text-center sm:pb-6 pb-4">
     {{__('messages.all_rights_reserved')}} &copy; {{ date('Y') }} <a href="#" class="text-blue-500 hover:underline">Ihor Shtohryn</a>
 </footer>
