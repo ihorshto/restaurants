@@ -61,4 +61,5 @@ return [
     'new_password' => 'Nouveau mot de passe',
     'confirm_new_password' => 'Confirmer le nouveau mot de passe',
     'password_reset_success' => 'Mot de passe réinitialisé avec succès.',
+    'all_rights_reserved' => 'Tous droits réservés',
 ];

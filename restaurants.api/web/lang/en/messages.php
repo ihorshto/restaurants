@@ -61,4 +61,5 @@ return [
     'new_password' => 'New Password',
     'confirm_new_password' => 'Confirm New Password',
     'password_reset_success' => 'Password reset successfully.',
+    'all_rights_reserved' => 'All rights reserved',
 ];
