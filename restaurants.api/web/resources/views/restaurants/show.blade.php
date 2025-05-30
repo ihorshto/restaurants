@@ -30,7 +30,7 @@
                     <div class="flex flex-wrap gap-2">
                         @foreach ($restaurant->tags as $index => $tag)
                             <span class="inline-block text-gray-800 text-xs font-medium px-3 py-1.5 rounded-full" style="background-color: {{$tag->color}};">
-                                {{ $tag->name }}
+                               # {{ $tag->name }}
                             </span>
                         @endforeach
                     </div>
