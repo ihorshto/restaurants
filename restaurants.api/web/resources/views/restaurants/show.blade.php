@@ -12,7 +12,7 @@
                 </a>
                 <button onclick="openMap({{$restaurant->latitude}}, {{$restaurant->longitude}})" class="w-full py-4 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-br-xl bg-white text-gray-800 hover:bg-gray-50 transition-all focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
                     <img src="{{asset('icons/map.svg')}}" alt="" class="w-5 h-5">
-                    {{__('messages.open_in_map')}}
+                    {{__('messages.open_on_map')}}
                 </button>
             </div>
         </div>
